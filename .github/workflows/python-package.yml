@@ -8,7 +8,6 @@ urls = ['https://cartoriovirtual.org']
 # Diretório de destino para a cópia das páginas
 diretorio_destino = '/caminho/para/o/diretorio/de/destino'
 
-for url in urls:
     # Realiza o download do conteúdo HTML da página
     response = requests.get(url)
     if response.status_code == 200:
