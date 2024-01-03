@@ -1,0 +1,39 @@
+import requests
+from bs4 import BeautifulSoup
+from pdfkit import from_file
+
+# Lista de URLs que serão copiadas
+urls = ['https://cartoriovirtual.org']
+
+# Diretório de destino para a cópia das páginas
+diretorio_destino = '/caminho/para/o/diretorio/de/destino'
+
+for url in urls:
+    # Realiza o download do conteúdo HTML da página
+    response = requests.get(url)
+    if response.status_code == 200:
+        # Obtém o conteúdo HTML da página
+        html = response.text
+
+        # Cria uma cópia exata da página na nuvem
+        # código para salvar na nuvem...
+
+        # Cria uma cópia exata da página em PDF
+        soup = BeautifulSoup(html, 'html.parser')
+        nome_arquivo = soup.title.string + '.pdf'
+        nome_arquivo = nome_arquivo.replace('/', '')
+
+        # Gera o arquivo PDF bloqueado
+        pdf_options = {
+            'encoding': 'UTF-8',
+            'quiet': '',
+            'no-outline': None,
+            'disable-smart-shrinking': None,
+            'permissions': 'printing'
+        }
+        pdf_path = f'{diretorio_destino}/{nome_arquivo}'
+        from_file(url, pdf_path, options=pdf_options)
+
+        print(f'Página {url} copiada com sucesso e salva em PDF bloqueado.')
+    else:
+        print(f'Erro ao copiar a página {url}.')
